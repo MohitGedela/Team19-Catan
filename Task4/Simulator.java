@@ -1,3 +1,36 @@
+import java.util.List;
+
 public class Simulator {
     
+    private List<Player> players;
+    private Turn turn;
+
+    public Simulator(List<Player> players, Turn turn) {
+        this.players = players;
+        this.turn = turn;
+    }
+
+    public void runGame() {
+        int round = 1;
+        boolean gameOver = false;
+
+        while(!gameOver) {
+
+            System.out.println("******Round " + round + "******");
+
+            for (Player player: players) {
+
+                String result = turn.execute(player, round);
+                System.out.println(result);
+
+                if (player.getVictoryPoints() >= 10) {
+                    System.out.println("Player " + player.getPlayerID() + " wins with " + player.getVictoryPoints() + " victory points!");
+
+                    gameOver = true;
+                    break;
+                }
+            }
+            round++;
+        }
+    }
 }
