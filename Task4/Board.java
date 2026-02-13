@@ -1,3 +1,7 @@
+import java.util.Map;
+import java.util.List;
+import java.util.Set;
+
 public class Board {
     private int[][] tilesNodes = {{41,42,40,18,17,39}, {40,44,43,21,16,18}, {43,45,47,46,19,21},
                                   {38,39,17,15,14,37}, {17,18,16,5,4,15}, {16,21,19,20,0,5},
@@ -6,6 +10,11 @@ public class Board {
                                   {34,13,12,11,32,33}, {12,3,2,9,10,11}, {2,1,6,7,8,9},
                                   {6,23,52,53,24,7}, {32,11,10,29,30,31}, {10,9,8,27,28,29},
                                   {8,7,24,25,26,27}};
+                                
+    private Map<Integer, Intersection> intersections;
+    private Map<Integer, HexTerrain> tiles;
+    private Map<Integer, List<Integer>> adjacency;
+    private Set<Road> builtRoads;
 
 
     public boolean isValidEdge(int start, int end) {
@@ -22,5 +31,17 @@ public class Board {
             }
         }
         return false;
+    }
+
+    public void buildSettlement(Intersection buildIntersection) {
+
+    }
+
+    public void buildCity(Intersection buildIntersection) {
+
+    }
+
+    public void buildRoad(Edge buildEdge) {
+
     }
 }
