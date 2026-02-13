@@ -6,7 +6,6 @@ public class Intersection {
         intersectionID = node;
     }
 
-///
     public int getIntersectionLocation() {
         return intersectionID;
     }    
