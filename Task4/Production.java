@@ -17,7 +17,8 @@ public class Production {
         }
 
         for (HexTerrain hex : board.getTiles()) {
-            
+            if (hex.)
+
         }
     }
 }

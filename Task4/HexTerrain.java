@@ -7,6 +7,14 @@ public abstract class HexTerrain {
         hexNumber = tileNum;
     }
 
+    public int getHexID() {
+        return hexID;
+    }
+
+    public HexBoardNum gerhexNumber() {
+        return hexNumber;
+    }
+
     public abstract ResourceType produceResource();
     public abstract boolean productionStatus();
 }
