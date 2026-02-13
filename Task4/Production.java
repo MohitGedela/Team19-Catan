@@ -2,21 +2,19 @@ import java.util.*;
 
 public class Production {
  
-    private Board gameBoard;
-    private List<Player> gamePlayers;
+    private Board board;
 
-    public Production(Board gameBoard, List<Player> gamePlayers) {
-        this.gameBoard = gameBoard;
-        this.gamePlayers = gamePlayers;
+    public Production(Board gameBoard) {
+        board = gameBoard;
     }
 
-    public void generateResources(int diceRollNum, Board board) {
+    public void generateResources(int diceRollNum) {
         
         if (diceRollNum == 7) {
             return;
         }
 
-        for (HexTerrain hex : board.getTiles()) {
+        for (HexTerrain hex : board.getHexes()) {
             if (!hex.productionStatus()) {
                 continue;
             }
@@ -25,7 +23,7 @@ public class Production {
             if (boardNumber != null && boardNumber.getHexNum() == diceRollNum) {
                 ResourceType resource = hex.produceResource();
 
-                List<Integer> intersectionIDs = board.getNeighbouringIntersections(hex.getHexID());
+                List<Integer> intersectionIDs = board.getHexIntersections(hex.getHexID());
                 for (Integer intersectionID : intersectionIDs) {
                     Intersection intersection = board.getIntersection(intersectionID);
 

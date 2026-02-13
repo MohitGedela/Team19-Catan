@@ -94,5 +94,21 @@ public class Board {
         return false;
     }
 
-    public HexTerrain
+    public List<HexTerrain> getHexes() {
+        return new ArrayList<>(tiles.values());
+    }
+
+    public HexTerrain getHex(int hexID) {
+        return tiles.get(hexID);
+    }
+
+    public List<Integer> getHexIntersections(int hexID) {
+        List<Integer> hexes = new ArrayList<>();
+
+        for (int hex : tilesNodes[hexID]) {
+            hexes.add(hex);
+        }
+
+        return hexes;
+    }
 }
