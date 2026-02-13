@@ -48,4 +48,16 @@ public class Player {
     public int getVictoryPoints() {
         return victoryPoints;
     }
+
+    public void buildSettlement(Intersection buildIntersection) {
+
+    }
+
+    public void buildCity(Intersection buildIntersection) {
+
+    }
+
+    public void buildRoad(Edge buildEdge) {
+
+    }
 }
