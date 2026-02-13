@@ -9,8 +9,12 @@ public class GameRules {
                                   {6,23,52,53,24,7}, {32,11,10,29,30,31}, {10,9,8,27,28,29},
                                   {8,7,24,25,26,27}};
 
-    public boolean checkBuildingPlacement(int IntersectionID, Player player) {
-        return true;
+    public boolean checkBuildingPlacement(int intersectionID, Player player, Board board) {
+        if (checkEmptyIntersections(intersectionID, board) == false) {
+            return false;
+        }
+
+        
     }
 
     public boolean checkEmptyIntersections(int intersectionID, Board board) {
