@@ -56,9 +56,6 @@ public class Board {
     }
 
     public void placeSettlement(Intersection placeIntersection, Player player) {
-        if (rules.checkBuildingPlacement(placeIntersection.getIntersectionLocation(), player)) {
-            // 
-        }
     }
 
     public void placeCity(Intersection placeIntersection, Player player) {
