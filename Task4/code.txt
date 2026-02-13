@@ -1,0 +1,24 @@
+    public boolean checkRoadPlacement(int startID, int endID, Player player, Board board) {
+        
+        if (board.isValidEdge(startID, endID) == false) {
+            return false;
+        }
+
+        // check if the edge is empty
+
+        Intersection intersectionStart = board.getIntersection(startID);
+        Intersection intersectionEnd = board.getIntersection(endID);
+
+        if (intersectionStart.getBuilding() != null && intersectionStart.getPlayer() == player) {
+            return true;
+        }
+        else if (intersectionEnd.getBuilding() != null && intersectionStart.getPlayer() == player) {
+            return true;
+        }
+        
+        for (Road road : player.getPlayerRoads()) {
+            startPoint = road.getLocation()
+        }
+
+
+    }
