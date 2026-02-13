@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+import java.util.*;
 
 public class GameRules {
     private int[][] tilesNodes = {{41,42,40,18,17,39}, {40,44,43,21,16,18}, {43,45,47,46,19,21},
@@ -13,9 +13,21 @@ public class GameRules {
         return true;
     }
 
-    public boolean checkEmptyIntersections(int IntersectionID, Board board) {
-        List<Integer> neighbourIntersections = board.getNeighbouringIntersections(IntersectionID);
+    public boolean checkEmptyIntersections(int intersectionID, Board board) {
+        Intersection currentIntersection = board.getIntersection(intersectionID);
 
-        
+        if(currentIntersection.getBuilding() == null) {
+            List<Integer> neighbourIntersections = board.getNeighbouringIntersections(intersectionID);
+
+            for (Integer neighbourID : neighbourIntersections) {
+                Intersection neighbour = board.getIntersection(neighbourID);
+
+                if (neighbour.getBuilding() != null) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
     }
 }

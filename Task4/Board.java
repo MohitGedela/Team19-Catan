@@ -51,6 +51,10 @@ public class Board {
         return neighbours;
     }
 
+    public Intersection getIntersection(int intersectionID) {
+        return intersections.get(intersectionID);
+    }
+
     public void placeSettlement(Intersection placeIntersection, Player player) {
         if (rules.checkBuildingPlacement(placeIntersection.getIntersectionLocation(), player)) {
             // 
