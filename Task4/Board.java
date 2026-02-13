@@ -33,15 +33,15 @@ public class Board {
         return false;
     }
 
-    public void buildSettlement(Intersection buildIntersection) {
+    public void placeSettlement(Intersection buildIntersection, Player player) {
 
     }
 
-    public void buildCity(Intersection buildIntersection) {
+    public void placeCity(Intersection buildIntersection) {
 
     }
 
-    public void buildRoad(Edge buildEdge) {
+    public void placeRoad(Edge buildEdge) {
 
     }
 }

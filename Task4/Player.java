@@ -49,8 +49,16 @@ public class Player {
         return victoryPoints;
     }
 
-    public void buildSettlement(Intersection buildIntersection) {
+    public void buildSettlement(Board board, Intersection placedIntersection) {
+        removeResource(ResourceType.Wood, 1);
+        removeResource(ResourceType.Brick, 1);
+        removeResource(ResourceType.Sheep, 1);
+        removeResource(ResourceType.Wheat, 1);
 
+        System.out.println("Enough Resources Provided");
+
+        board.placeSettlement(placedIntersection, this);
+        victoryPoints += 1;
     }
 
     public void buildCity(Intersection buildIntersection) {
