@@ -7,14 +7,16 @@ public class Player {
     private int victoryPoints;
     private List<City> playerCities;
     private List<Settlement> playerSettlements;
+    private List<Road> playerRoads;
     private Map<ResourceType, Integer> playerResources;
     
-    public Player(int playerNum, int playerVP, List<City> cities, List<Settlement> settlements, Map<ResourceType, Integer> resources) {
+    public Player(int playerNum, int playerVP, List<City> cities, List<Settlement> settlements, List<Road> roads, Map<ResourceType, Integer> resources) {
         playerID = playerNum;
         victoryPoints = playerVP;
         playerCities = cities;
         playerSettlements = settlements;
         playerResources = resources;
+        playerRoads = roads;
     }
 
     public void addResource(ResourceType resource, int quantity) {
@@ -74,5 +76,9 @@ public class Player {
     public void buildRoad(Edge buildEdge) {
         removeResource(ResourceType.Brick, 1);
         removeResource(ResourceType.Wood, 1);
+    }
+
+    public List<Road> getPlayerRoads() {
+        return playerRoads;
     }
 }
