@@ -11,7 +11,7 @@ public abstract class HexTerrain {
         return hexID;
     }
 
-    public HexBoardNum gerhexNumber() {
+    public HexBoardNum getHexNumber() {
         return hexNumber;
     }
 
