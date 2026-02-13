@@ -1,6 +1,8 @@
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Random;
 
 public class Player {
     private int playerID;
@@ -83,8 +85,46 @@ public class Player {
         }
     }
 
-    public String playerRandomMove(Board board) {
+    public String takeRandomAction(Board board) {
         Random random = new Random();
+        int action = random.nextInt(3);
+
+        if (action == 0) {
+            List<Integer> validSpots = new ArrayList<>();
+            for (int i = 0; i <= 53; i++) {
+                Intersection intersection = board.getIntersection(i);
+                if (intersection != null) {
+                    validSpots.add(i);
+                }
+            }
+            if (!validSpots.isEmpty()) {
+                int randomIndex = random.nextInt(validSpots.size());
+                Intersection target = board.getIntersection(validSpots.get(randomIndex));
+                buildSettlement(board, target);
+                return "attempted settlement at " + validSpots.get(randomIndex);
+            }
+
+        } else if (action == 1) {
+            if (!playerSettlements.isEmpty()) {
+                int randomIndex = random.nextInt(playerSettlements.size());
+                Intersection target = playerSettlements.get(randomIndex).getBuildlocation();
+                buildCity(board, target);
+                return "attempted city at " + target.getIntersectionLocation();
+            }
+
+        } else {
+            for (int i = 0; i <= 53; i++) {
+                for (int j = i + 1; j <= 53; j++) {
+                    if (board.isValidEdge(i, j)) {
+                        Edge edge = new Edge(i, j);
+                        buildRoad(board, edge);
+                        return "attempted road at edge " + i + "-" + j;
+                    }
+                }
+            }
+        }
+
+        return "no action taken";
     }
 
     public List<Settlement> getPlayerSettlements() {

@@ -1,3 +1,7 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 public class Turn {
 
     private Dice dice;
@@ -11,7 +15,6 @@ public class Turn {
     }
 
     public String execute(Player player, int roundNumber) {
-
         int roll = dice.roll();
         production.generateResources(roll);
 
