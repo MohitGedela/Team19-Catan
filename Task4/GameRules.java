@@ -14,7 +14,9 @@ public class GameRules {
             return false;
         }
 
-        
+        return true;
+
+
     }
 
     public boolean checkEmptyIntersections(int intersectionID, Board board) {
