@@ -13,7 +13,7 @@ public class Dice {
         do {
             dice1 = random.nextInt(6) + 1;
             dice2 = random.nextInt(6) + 1;
-        } while (dice1 + dice2 == 7); //Reroll if it is 7
+        } while (dice1 + dice2 == 7); 
 
         return dice1 + dice2;
     }
