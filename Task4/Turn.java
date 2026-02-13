@@ -20,9 +20,7 @@ public class Turn {
 
         String actionResult = player.takeRandomAction(board);
 
-        return "[" + roundNumber + "] Player "
-                + player.getPlayerID()
-                + " rolled " + roll
-                + " -> " + actionResult;
+        return "==" + roundNumber + "== Player " + player.getPlayerID()
+        + " rolled " + roll + " -> " + actionResult;
     }
 }
