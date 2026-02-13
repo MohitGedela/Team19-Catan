@@ -52,39 +52,56 @@ public class GameRules {
         return false;
     }
 
-    public boolean checkRoadPlacement(int startID, int endID, Player player, Board board) {
-        
+    public boolean checkRoadPlacement(Edge roadEdge, Player player, Board board) {
+        int startID = roadEdge.getStart();
+        int endID = roadEdge.getEnd();
+
         if (!board.isValidEdge(startID, endID)) {
+            return false;
+        }
+
+        if (!roadEdge.isEmpty()) {
             return false;
         }
 
         Intersection intersectionStart = board.getIntersection(startID);
         Intersection intersectionEnd = board.getIntersection(endID);
-        // Edge roadEdge = new Edge(startID, endID);
-
-        // if (!roadEdge.isEmpty()) {
-        //     return false;
-        // }
 
         if (intersectionStart.getBuilding() != null && intersectionStart.getPlayer() == player) {
             return true;
         }
-        else if (intersectionEnd.getBuilding() != null && intersectionEnd.getPlayer() == player) {
+        if (intersectionEnd.getBuilding() != null && intersectionEnd.getPlayer() == player) {
             return true;
         }
-        
+
         for (Road road : player.getPlayerRoads()) {
             int startPoint = road.getLocation().getStart();
             int endPoint = road.getLocation().getEnd();
 
             if (startPoint == startID || startPoint == endID) {
-                return true;
-            }
-            else if (endPoint == startID || endPoint == endID) {
-                return true;
+                int sharedNode;
+                if (startPoint == startID) {
+                    sharedNode = startID;
+                } else {
+                    sharedNode = endID;
+                }
+                Intersection shared = board.getIntersection(sharedNode);
+                if (shared.getBuilding() == null || shared.getPlayer() == player) {
+                    return true;
+                }
+            } else if (endPoint == startID || endPoint == endID) {
+                int sharedNode;
+                if (endPoint == startID) {
+                    sharedNode = startID;
+                } else {
+                    sharedNode = endID;
+                }
+                Intersection shared = board.getIntersection(sharedNode);
+                if (shared.getBuilding() == null || shared.getPlayer() == player) {
+                    return true;
+                }
             }
         }
-
         return false;
     }
 }

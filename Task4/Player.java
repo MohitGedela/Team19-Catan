@@ -39,7 +39,7 @@ public class Player {
     }
 
     public boolean checkResource(ResourceType resource, int quantity) {
-        if (playerResources.containsKey(resource) && playerResources.get(resource) == quantity) {
+        if (playerResources.containsKey(resource) && playerResources.get(resource) >= quantity) {
             return true;
         }
         else {
