@@ -6,4 +6,8 @@ public class GameRules {
                                   {34,13,12,11,32,33}, {12,3,2,9,10,11}, {2,1,6,7,8,9},
                                   {6,23,52,53,24,7}, {32,11,10,29,30,31}, {10,9,8,27,28,29},
                                   {8,7,24,25,26,27}};
+
+    public boolean checkBuildingPlacement(int IntersectionID, Player player) {
+        return true;
+    }
 }

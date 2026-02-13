@@ -15,6 +15,7 @@ public class Board {
     private Map<Integer, HexTerrain> tiles;
     private Map<Integer, List<Integer>> adjacency;
     private Set<Road> builtRoads;
+    private GameRules rules = new GameRules();
 
 
     public boolean isValidEdge(int start, int end) {
@@ -33,15 +34,17 @@ public class Board {
         return false;
     }
 
-    public void placeSettlement(Intersection buildIntersection, Player player) {
+    public void placeSettlement(Intersection placeIntersection, Player player) {
+        if (GameRules.checkBuildingPlacement(placeIntersection.getIntersectionLocation(), player)) {
+            
+        }
+    }
+
+    public void placeCity(Intersection placeIntersection, Player player) {
 
     }
 
-    public void placeCity(Intersection buildIntersection) {
-
-    }
-
-    public void placeRoad(Edge buildEdge) {
+    public void placeRoad(Edge placeEdge, Player player) {
 
     }
 }

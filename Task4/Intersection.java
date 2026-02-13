@@ -1,12 +1,32 @@
 public class Intersection {
-    int intersectionID;
-    // Building intersectionBuilding = new Building();
+    private int intersectionID;
+    private Building intersectionBuilding;
+    private Player owner;
 
+    // Intersection setBuilding, set Owner
     Intersection(int node) {
         intersectionID = node;
+        this.intersectionBuilding = null;
+        this.owner = null;
     }
 
     public int getIntersectionLocation() {
         return intersectionID;
     }    
+
+    public void setBuilding(Building building) {
+        intersectionBuilding = building;
+    }
+
+    public void setOwner(Player player) {
+        owner = player;
+    }
+
+    public Building getBuilding() {
+        return intersectionBuilding;
+    }
+
+    public Player getPlayer() {
+        return owner;
+    }
 }
