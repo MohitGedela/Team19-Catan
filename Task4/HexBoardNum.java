@@ -8,5 +8,4 @@ public class HexBoardNum {
     public int getHexNum() {
         return mappedNum;
     }
-    
 }
