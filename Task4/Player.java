@@ -83,11 +83,19 @@ public class Player {
         }
     }
 
+    public String playerRandomMove(Board board) {
+        Random random = new Random();
+    }
+
     public List<Settlement> getPlayerSettlements() {
         return playerSettlements;
     }
 
     public List<Road> getPlayerRoads() {
         return playerRoads;
+    }
+
+    public int getPlayerID() {
+        return playerID;
     }
 }
