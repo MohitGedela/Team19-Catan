@@ -36,4 +36,19 @@ public class GameRules {
         }
         return false;
     }
+
+
+    public boolean isConnected(int intersectionID, Player player, Board board) {
+        List<Road> playerRoads = player.getPlayerRoads();
+
+        for (Road road : playerRoads) {
+            int roadStart = road.getLocation().getStart();
+            int roadEnd = road.getLocation().getEnd();
+
+            if (roadStart == intersectionID || roadEnd == intersectionID) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
