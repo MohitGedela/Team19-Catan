@@ -81,6 +81,10 @@ public class Board {
     }
 
     public void placeRoad(Edge placeEdge, Player player) {
-        
+        if (rules.checkRoadPlacement(placeEdge, player, this)) {
+            Road road = new Road(player, placeEdge);
+            player.getPlayerRoads().add(road);
+            placeEdge.setNotEmpty();
+        }
     }
 }
