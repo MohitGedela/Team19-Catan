@@ -8,4 +8,5 @@ public abstract class HexTerrain {
     }
 
     public abstract ResourceType produceResource();
+    public abstract boolean productionStatus();
 }
