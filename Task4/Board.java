@@ -55,37 +55,43 @@ public class Board {
         return intersections.get(intersectionID);
     }
 
-    public void placeSettlement(Intersection placeIntersection, Player player) {
+    public boolean placeSettlement(Intersection placeIntersection, Player player) {
         if (rules.checkEmptyIntersections(placeIntersection.getIntersectionLocation(), this)) {
             if (player.getPlayerSettlements().size() < 2) {
                 Settlement settlement = new Settlement(placeIntersection, player);
                 placeIntersection.setBuilding(settlement);
                 placeIntersection.setOwner(player);
+                return true;
             }
         } else {
             if (rules.isConnected(placeIntersection.getIntersectionLocation(), player, this)) {
                 Settlement settlement = new Settlement(placeIntersection, player);
                 placeIntersection.setBuilding(settlement);
                 placeIntersection.setOwner(player);
+                return true;
             }
         }
+        return false;
     }
 
-    public void placeCity(Intersection placeIntersection, Player player) {
-
+    public boolean placeCity(Intersection placeIntersection, Player player) {
         Building existing = placeIntersection.getBuilding();
         if (existing instanceof Settlement && existing.getOwner() == player) {
             City city = new City(placeIntersection, player);
             placeIntersection.setBuilding(city);
+            return true;
         }
+        return false;
     }
 
-    public void placeRoad(Edge placeEdge, Player player) {
+    public boolean placeRoad(Edge placeEdge, Player player) {
         if (rules.checkRoadPlacement(placeEdge, player, this)) {
             Road road = new Road(player, placeEdge);
             player.getPlayerRoads().add(road);
             placeEdge.setNotEmpty();
+            return true;
         }
+        return false;
     }
 
     public HexTerrain

@@ -20,10 +20,7 @@ public class Player {
     }
 
     public void addResource(ResourceType resource, int quantity) {
-        if (playerResources.containsKey(resource)) {
-            playerResources.put(resource, playerResources.get(resource) + quantity);
-        }
-        System.out.println("Succesfully added");
+        playerResources.put(resource, playerResources.getOrDefault(resource, 0) + quantity);
     }
 
     public boolean removeResource(ResourceType resource, int quantity) {
@@ -52,30 +49,38 @@ public class Player {
     }
 
     public void buildSettlement(Board board, Intersection buildIntersection) {
-        removeResource(ResourceType.Wood, 1);
-        removeResource(ResourceType.Brick, 1);
-        removeResource(ResourceType.Sheep, 1);
-        removeResource(ResourceType.Wheat, 1);
-
-        System.out.println("Enough Resources Provided");
-
-        board.placeSettlement(buildIntersection, this);
-        victoryPoints += 1;
+        if (!checkResource(ResourceType.Wood, 1) || !checkResource(ResourceType.Brick, 1) ||
+            !checkResource(ResourceType.Sheep, 1) || !checkResource(ResourceType.Wheat, 1)) {
+            return;
+        }
+        if (board.placeSettlement(buildIntersection, this)) {
+            removeResource(ResourceType.Wood, 1);
+            removeResource(ResourceType.Brick, 1);
+            removeResource(ResourceType.Sheep, 1);
+            removeResource(ResourceType.Wheat, 1);
+            victoryPoints += 1;
+        }
     }
 
     public void buildCity(Board board, Intersection buildIntersection) {
-        removeResource(ResourceType.Wheat, 2);
-        removeResource(ResourceType.Ore, 3);
-
-        System.out.println("Enough Resources Provided");
-
-        board.placeCity(buildIntersection, this);
-        victoryPoints += 2;
+        if (!checkResource(ResourceType.Wheat, 2) || !checkResource(ResourceType.Ore, 3)) {
+            return;
+        }
+        if (board.placeCity(buildIntersection, this)) {
+            removeResource(ResourceType.Wheat, 2);
+            removeResource(ResourceType.Ore, 3);
+            victoryPoints += 1;
+        }
     }
 
-    public void buildRoad(Edge buildEdge) {
-        removeResource(ResourceType.Brick, 1);
-        removeResource(ResourceType.Wood, 1);
+    public void buildRoad(Board board, Edge buildEdge) {
+        if (!checkResource(ResourceType.Brick, 1) || !checkResource(ResourceType.Wood, 1)) {
+            return;
+        }
+        if (board.placeRoad(buildEdge, this)) {
+            removeResource(ResourceType.Brick, 1);
+            removeResource(ResourceType.Wood, 1);
+        }
     }
 
     public List<Settlement> getPlayerSettlements() {
