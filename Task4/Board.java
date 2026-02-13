@@ -56,16 +56,31 @@ public class Board {
     }
 
     public void placeSettlement(Intersection placeIntersection, Player player) {
-        if (rules.checkBuildingPlacement(placeIntersection.getIntersectionLocation(), player)) {
-            // 
+        if (rules.checkEmptyIntersections(placeIntersection.getIntersectionLocation(), this)) {
+            if (player.getPlayerSettlements().size() < 2) {
+                Settlement settlement = new Settlement(placeIntersection, player);
+                placeIntersection.setBuilding(settlement);
+                placeIntersection.setOwner(player);
+            }
+        } else {
+            if (rules.isConnected(placeIntersection.getIntersectionLocation(), player, this)) {
+                Settlement settlement = new Settlement(placeIntersection, player);
+                placeIntersection.setBuilding(settlement);
+                placeIntersection.setOwner(player);
+            }
         }
     }
 
     public void placeCity(Intersection placeIntersection, Player player) {
 
+        Building existing = placeIntersection.getBuilding();
+        if (existing instanceof Settlement && existing.getOwner() == player) {
+            City city = new City(placeIntersection, player);
+            placeIntersection.setBuilding(city);
+        }
     }
 
     public void placeRoad(Edge placeEdge, Player player) {
-
+        
     }
 }

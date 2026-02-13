@@ -27,7 +27,7 @@ public class Player {
     }
 
     public boolean removeResource(ResourceType resource, int quantity) {
-        if (quantity > playerResources.get(resource) && playerResources.containsKey(resource)) {
+        if (playerResources.containsKey(resource) && quantity > playerResources.get(resource)) {
             System.out.println("Unsuccesful not enough resources");
             return false;
         }
@@ -76,6 +76,10 @@ public class Player {
     public void buildRoad(Edge buildEdge) {
         removeResource(ResourceType.Brick, 1);
         removeResource(ResourceType.Wood, 1);
+    }
+
+    public List<Settlement> getPlayerSettlements() {
+        return playerSettlements;
     }
 
     public List<Road> getPlayerRoads() {
