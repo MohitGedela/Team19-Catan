@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.List;
 import java.util.Set;
@@ -34,9 +35,25 @@ public class Board {
         return false;
     }
 
-    public void placeSettlement(Intersection placeIntersection, Player player) {
-        if (GameRules.checkBuildingPlacement(placeIntersection.getIntersectionLocation(), player)) {
+    public List<Integer> getNeighbouringIntersections(int intersectionID) {
+        List<Integer> neighbours = new ArrayList<>();
+
+        for (int i = 0; i <= 53; i++) { 
+            if (i == intersectionID) {
+                continue;
+            }
             
+            if (isValidEdge(intersectionID, i)) {
+                neighbours.add(i);
+            }
+        }
+
+        return neighbours;
+    }
+
+    public void placeSettlement(Intersection placeIntersection, Player player) {
+        if (rules.checkBuildingPlacement(placeIntersection.getIntersectionLocation(), player)) {
+            // 
         }
     }
 

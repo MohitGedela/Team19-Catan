@@ -17,4 +17,3 @@ public abstract class Building {
         return buildOwner;
     }
 }
-

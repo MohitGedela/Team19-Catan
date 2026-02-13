@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class GameRules {
     private int[][] tilesNodes = {{41,42,40,18,17,39}, {40,44,43,21,16,18}, {43,45,47,46,19,21},
                                   {38,39,17,15,14,37}, {17,18,16,5,4,15}, {16,21,19,20,0,5},
@@ -9,5 +11,11 @@ public class GameRules {
 
     public boolean checkBuildingPlacement(int IntersectionID, Player player) {
         return true;
+    }
+
+    public boolean checkEmptyIntersections(int IntersectionID, Board board) {
+        List<Integer> neighbourIntersections = board.getNeighbouringIntersections(IntersectionID);
+
+        
     }
 }
