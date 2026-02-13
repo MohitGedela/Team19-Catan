@@ -51,4 +51,40 @@ public class GameRules {
         }
         return false;
     }
+
+    public boolean checkRoadPlacement(int startID, int endID, Player player, Board board) {
+        
+        if (!board.isValidEdge(startID, endID)) {
+            return false;
+        }
+
+        Intersection intersectionStart = board.getIntersection(startID);
+        Intersection intersectionEnd = board.getIntersection(endID);
+        // Edge roadEdge = new Edge(startID, endID);
+
+        // if (!roadEdge.isEmpty()) {
+        //     return false;
+        // }
+
+        if (intersectionStart.getBuilding() != null && intersectionStart.getPlayer() == player) {
+            return true;
+        }
+        else if (intersectionEnd.getBuilding() != null && intersectionEnd.getPlayer() == player) {
+            return true;
+        }
+        
+        for (Road road : player.getPlayerRoads()) {
+            int startPoint = road.getLocation().getStart();
+            int endPoint = road.getLocation().getEnd();
+
+            if (startPoint == startID || startPoint == endID) {
+                return true;
+            }
+            else if (endPoint == startID || endPoint == endID) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
