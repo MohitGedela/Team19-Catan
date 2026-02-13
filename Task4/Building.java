@@ -1,8 +1,10 @@
 public abstract class Building {
     protected Intersection buildLocation;
+    protected Player buildOwner; 
 
-    public Building(Intersection buildingIntersection) {
+    public Building(Intersection buildingIntersection, Player owner) {
         buildLocation = buildingIntersection;
+        buildOwner = owner;
     }
 
     public Intersection getBuildlocation() {
@@ -10,4 +12,9 @@ public abstract class Building {
     }
 
     public abstract int getVictoryPoints();
+
+    public Player getOwner() {
+        return buildOwner;
+    }
 }
+
