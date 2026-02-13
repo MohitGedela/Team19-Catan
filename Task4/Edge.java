@@ -1,6 +1,7 @@
 public class Edge {
     private int start;
     private int end;
+    private boolean isEmpty = true;
 
     public Edge(int start, int end) {
         this.start = start;
@@ -17,5 +18,13 @@ public class Edge {
 
     public int[] getLocation() {
         return new int[] {start, end};
+    }
+
+    public void setNotEmpty() {
+        isEmpty = false;
+    }
+
+    public boolean isEmpty() {
+        return isEmpty;
     }
 }
