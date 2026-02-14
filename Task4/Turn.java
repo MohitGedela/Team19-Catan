@@ -1,5 +1,5 @@
 // One turn = roll dice, give resources to players on that number, then get this player's one action (build something or try).
-public class Turn {
+class Turn {
 
     private Dice dice;
     private Production production;

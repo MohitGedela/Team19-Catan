@@ -1,6 +1,6 @@
-public abstract class Building {
-    protected Intersection buildLocation;
-    protected Player buildOwner; 
+abstract class Building {
+    private Intersection buildLocation;
+    private Player buildOwner; 
 
     public Building(Intersection buildingIntersection, Player owner) {
         buildLocation = buildingIntersection;

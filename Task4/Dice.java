@@ -1,6 +1,6 @@
 import java.util.Random;
 
-public class Dice {
+class Dice {
     private int dice1;
     private int dice2;
     private Random random;

@@ -1,7 +1,7 @@
-import java.util.*;
+import java.util.List;
 
 // When dice are rolled, gives resources to players who have a building on a hex with that number.
-public class Production {
+class Production {
 
     private Board board;
 

@@ -1,7 +1,7 @@
-import java.util.*;
+import java.util.List;
 
 // Checks if a spot is ok to build on (empty, not next to another building, or connected by your road).
-public class GameRules {
+class GameRules {
 
     public boolean checkBuildingPlacement(int intersectionID, Player player, Board board) {
         if (checkEmptyIntersections(intersectionID, board) == false) {
@@ -9,7 +9,6 @@ public class GameRules {
         }
 
         return true;
-
     }
 
     // True if this corner is empty and every neighbour corner is also empty

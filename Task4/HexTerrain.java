@@ -1,6 +1,6 @@
-public abstract class HexTerrain {
-    protected int hexID;
-    protected HexBoardNum hexNumber;
+abstract class HexTerrain {
+    private int hexID;
+    private HexBoardNum hexNumber;
 
     public HexTerrain(int hexagonID, HexBoardNum tileNum) {
         hexID = hexagonID;

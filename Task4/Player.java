@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 // One player: their cards (resources), buildings (settlements/cities/roads), and VP. Can build if they have the right cards.
-public class Player {
+class Player {
     private int playerID;
     private int victoryPoints;
     private List<City> playerCities;
@@ -12,8 +12,7 @@ public class Player {
     private List<Road> playerRoads;
     private Map<ResourceType, Integer> playerResources;
 
-    public Player(int playerNum, int playerVP, List<City> cities, List<Settlement> settlements, List<Road> roads,
-            Map<ResourceType, Integer> resources) {
+    public Player(int playerNum, int playerVP, List<City> cities, List<Settlement> settlements, List<Road> roads, Map<ResourceType, Integer> resources) {
         playerID = playerNum;
         victoryPoints = playerVP;
         playerCities = cities;
@@ -64,8 +63,7 @@ public class Player {
     // Costs 1 wood, 1 brick, 1 sheep, 1 wheat. Only builds if board says the spot
     // is ok.
     public void buildSettlement(Board board, Intersection buildIntersection) {
-        if (!checkResource(ResourceType.Wood, 1) || !checkResource(ResourceType.Brick, 1) ||
-                !checkResource(ResourceType.Sheep, 1) || !checkResource(ResourceType.Wheat, 1)) {
+        if (!checkResource(ResourceType.Wood, 1) || !checkResource(ResourceType.Brick, 1) || !checkResource(ResourceType.Sheep, 1) || !checkResource(ResourceType.Wheat, 1)) {
             return;
         }
         if (board.placeSettlement(buildIntersection, this)) {

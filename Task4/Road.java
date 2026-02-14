@@ -1,4 +1,4 @@
-public class Road {
+class Road {
     private Player owner;
     private Edge location;
 

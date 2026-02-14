@@ -1,4 +1,4 @@
-public class Edge {
+class Edge {
     private int start;
     private int end;
     private boolean isEmpty = true;

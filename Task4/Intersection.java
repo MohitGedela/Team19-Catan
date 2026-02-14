@@ -1,9 +1,9 @@
-public class Intersection {
+class Intersection {
     private int intersectionID;
     private Building intersectionBuilding;
     private Player owner;
 
-    Intersection(int node) {
+    public Intersection(int node) {
         intersectionID = node;
         this.intersectionBuilding = null;
         this.owner = null;

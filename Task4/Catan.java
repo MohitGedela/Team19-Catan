@@ -5,7 +5,7 @@ import java.util.Scanner;
 import java.io.File;
 
 // Starts the game: makes the board, players, then runs rounds until someone hits 10 VP or we hit max rounds.
-public class Catan {
+class Catan {
 
     public static void main(String[] args) throws Exception {
 
@@ -14,7 +14,7 @@ public class Catan {
         Production production = new Production(board);
 
         // Read how many rounds from config file (e.g. turns: 100).
-        Scanner scanner = new Scanner(new File("Task4/config.txt"));
+        Scanner scanner = new Scanner(new File("config.txt"));
         String line = scanner.nextLine();
         int maxRounds = Integer.parseInt(line.split(":")[1].trim());
         scanner.close();
@@ -22,17 +22,10 @@ public class Catan {
         // Make 4 players with no stuff yet.
         List<Player> players = new ArrayList<Player>();
 
-        Player p1 = new Player(1, 0, new ArrayList<>(),
-                new ArrayList<>(), new ArrayList<>(), new HashMap<>());
-
-        Player p2 = new Player(2, 0, new ArrayList<>(),
-                new ArrayList<>(), new ArrayList<>(), new HashMap<>());
-
-        Player p3 = new Player(3, 0, new ArrayList<>(),
-                new ArrayList<>(), new ArrayList<>(), new HashMap<>());
-
-        Player p4 = new Player(4, 0, new ArrayList<>(),
-                new ArrayList<>(), new ArrayList<>(), new HashMap<>());
+        Player p1 = new Player(1, 0, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new HashMap<>());
+        Player p2 = new Player(2, 0, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new HashMap<>());
+        Player p3 = new Player(3, 0, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new HashMap<>());
+        Player p4 = new Player(4, 0, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new HashMap<>());
 
         players.add(p1);
         players.add(p2);
