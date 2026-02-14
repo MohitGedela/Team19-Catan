@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class Production {
- 
+
     private Board board;
 
     public Production(Board gameBoard) {
@@ -9,10 +9,6 @@ public class Production {
     }
 
     public void generateResources(int diceRollNum) {
-        
-        if (diceRollNum == 7) {
-            return;
-        }
 
         for (HexTerrain hex : board.getHexes()) {
             if (!hex.productionStatus()) {
