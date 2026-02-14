@@ -2,8 +2,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
-import java.util.Set;
 
+// The map: 54 corners (intersections), 19 hexes with resources and numbers. Tracks where buildings and roads are.
 public class Board {
     private int[][] tilesNodes = { { 41, 42, 40, 18, 17, 39 }, { 40, 44, 43, 21, 16, 18 }, { 43, 45, 47, 46, 19, 21 },
             { 38, 39, 17, 15, 14, 37 }, { 17, 18, 16, 5, 4, 15 }, { 16, 21, 19, 20, 0, 5 },
@@ -15,8 +15,7 @@ public class Board {
 
     private Map<Integer, Intersection> intersections;
     private Map<Integer, HexTerrain> tiles;
-    private Map<Integer, List<Integer>> adjacency;
-    private Set<Road> builtRoads;
+    private List<int[]> builtEdges = new ArrayList<>();
     private GameRules rules = new GameRules();
 
     public Board() {
@@ -25,10 +24,8 @@ public class Board {
             intersections.put(i, new Intersection(i));
         }
 
-        // set up the 19 hex tiles on the board
         tiles = new HashMap<>();
 
-        // resources for each hex (18 resource tiles + 1 desert)
         ResourceType[] resources = {
                 ResourceType.Wood, ResourceType.Wood, ResourceType.Wood, ResourceType.Wood,
                 ResourceType.Brick, ResourceType.Brick, ResourceType.Brick,
@@ -37,10 +34,8 @@ public class Board {
                 ResourceType.Ore, ResourceType.Ore, ResourceType.Ore
         };
 
-        // number tokens for each resource hex
         int[] numbers = { 2, 3, 3, 4, 4, 5, 5, 6, 6, 8, 8, 9, 9, 10, 10, 11, 11, 12 };
 
-        // desert goes in the middle (hex 9)
         tiles.put(9, new DesertHex(9));
 
         int resourceIndex = 0;
@@ -53,6 +48,8 @@ public class Board {
         }
     }
 
+    // True if the two corners are next to each other on the hex map (share an
+    // edge).
     public boolean isValidEdge(int start, int end) {
         for (int i = 0; i < 19; i++) {
             for (int j = 0; j < 6; j++) {
@@ -71,6 +68,7 @@ public class Board {
         return false;
     }
 
+    // All corners that are one edge away from this corner.
     public List<Integer> getNeighbouringIntersections(int intersectionID) {
         List<Integer> neighbours = new ArrayList<>();
 
@@ -91,12 +89,15 @@ public class Board {
         return intersections.get(intersectionID);
     }
 
+    // Ok if spot is empty and no neighbour has a building (and player has < 2), or
+    // if spot is connected by player's road.
     public boolean placeSettlement(Intersection placeIntersection, Player player) {
         if (rules.checkEmptyIntersections(placeIntersection.getIntersectionLocation(), this)) {
             if (player.getPlayerSettlements().size() < 2) {
                 Settlement settlement = new Settlement(placeIntersection, player);
                 placeIntersection.setBuilding(settlement);
                 placeIntersection.setOwner(player);
+                player.getPlayerSettlements().add(settlement);
                 return true;
             }
         } else {
@@ -104,12 +105,14 @@ public class Board {
                 Settlement settlement = new Settlement(placeIntersection, player);
                 placeIntersection.setBuilding(settlement);
                 placeIntersection.setOwner(player);
+                player.getPlayerSettlements().add(settlement);
                 return true;
             }
         }
         return false;
     }
 
+    // Only works if there is your settlement there; replaces it with a city.
     public boolean placeCity(Intersection placeIntersection, Player player) {
         Building existing = placeIntersection.getBuilding();
         if (existing instanceof Settlement && existing.getOwner() == player) {
@@ -120,11 +123,22 @@ public class Board {
         return false;
     }
 
+    public boolean isEdgeOccupied(int start, int end) {
+        for (int[] edge : builtEdges) {
+            if ((edge[0] == start && edge[1] == end) || (edge[0] == end && edge[1] == start)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // Road must be on a valid edge, not taken, and next to your building or your
+    // road.
     public boolean placeRoad(Edge placeEdge, Player player) {
         if (rules.checkRoadPlacement(placeEdge, player, this)) {
             Road road = new Road(player, placeEdge);
             player.getPlayerRoads().add(road);
-            placeEdge.setNotEmpty();
+            builtEdges.add(new int[] { placeEdge.getStart(), placeEdge.getEnd() });
             return true;
         }
         return false;

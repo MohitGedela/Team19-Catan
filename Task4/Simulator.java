@@ -1,5 +1,6 @@
 import java.util.List;
 
+// Runs round by round: each player rolls and takes one action, then we print VPs. Stops at 10 VP or max rounds.
 public class Simulator {
 
     private List<Player> players;
@@ -21,7 +22,6 @@ public class Simulator {
             System.out.println("******Round " + round + "******");
 
             for (Player player : players) {
-
                 String result = turn.execute(player, round);
                 System.out.println(result);
 
@@ -34,15 +34,16 @@ public class Simulator {
                 }
             }
 
-            // print victory points at the end of each round
             for (Player player : players) {
                 System.out.println("Player " + player.getPlayerID() + " VP: " + player.getVictoryPoints());
             }
+            System.out.println();
 
             round++;
         }
 
         if (!gameOver) {
+            // Nobody reached 10 VP before round limit.
             System.out.println("Game ended after " + maxRounds + " rounds. No winner.");
         }
     }

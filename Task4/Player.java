@@ -1,9 +1,9 @@
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Random;
 
+// One player: their cards (resources), buildings (settlements/cities/roads), and VP. Can build if they have the right cards.
 public class Player {
     private int playerID;
     private int victoryPoints;
@@ -26,15 +26,14 @@ public class Player {
         playerResources.put(resource, playerResources.getOrDefault(resource, 0) + quantity);
     }
 
+    // Take cards from hand. Returns false if not enough.
     public boolean removeResource(ResourceType resource, int quantity) {
-        if (playerResources.containsKey(resource) && quantity > playerResources.get(resource)) {
+        int have = playerResources.getOrDefault(resource, 0);
+        if (have < quantity) {
             System.out.println("Unsuccesful not enough resources");
             return false;
         }
-
-        if (playerResources.containsKey(resource)) {
-            playerResources.put(resource, playerResources.get(resource) - quantity);
-        }
+        playerResources.put(resource, have - quantity);
         return true;
     }
 
@@ -50,6 +49,20 @@ public class Player {
         return victoryPoints;
     }
 
+    public void addVictoryPoint() {
+        victoryPoints++;
+    }
+
+    public int getTotalResources() {
+        int total = 0;
+        for (int amount : playerResources.values()) {
+            total += amount;
+        }
+        return total;
+    }
+
+    // Costs 1 wood, 1 brick, 1 sheep, 1 wheat. Only builds if board says the spot
+    // is ok.
     public void buildSettlement(Board board, Intersection buildIntersection) {
         if (!checkResource(ResourceType.Wood, 1) || !checkResource(ResourceType.Brick, 1) ||
                 !checkResource(ResourceType.Sheep, 1) || !checkResource(ResourceType.Wheat, 1)) {
@@ -60,11 +73,12 @@ public class Player {
             removeResource(ResourceType.Brick, 1);
             removeResource(ResourceType.Sheep, 1);
             removeResource(ResourceType.Wheat, 1);
-            playerSettlements.add(new Settlement(buildIntersection, this));
             victoryPoints += 1;
         }
     }
 
+    // Costs 2 wheat, 3 ore. Replaces one of your settlements with a city (same
+    // spot).
     public void buildCity(Board board, Intersection buildIntersection) {
         if (!checkResource(ResourceType.Wheat, 2) || !checkResource(ResourceType.Ore, 3)) {
             return;
@@ -73,7 +87,6 @@ public class Player {
             removeResource(ResourceType.Wheat, 2);
             removeResource(ResourceType.Ore, 3);
 
-            // remove the old settlement from the list
             for (int i = 0; i < playerSettlements.size(); i++) {
                 if (playerSettlements.get(i).getBuildlocation() == buildIntersection) {
                     playerSettlements.remove(i);
@@ -96,9 +109,46 @@ public class Player {
         }
     }
 
+    // If over 7 cards we must try to spend (settlement then city then road). Else
+    // pick one build at random and try it.
     public String takeRandomAction(Board board) {
         Random random = new Random();
-        int action = random.nextInt(3);
+
+        if (getTotalResources() > 7) {
+            for (int i = 0; i <= 53; i++) {
+                Intersection spot = board.getIntersection(i);
+                if (spot != null && spot.getBuilding() == null) {
+                    int vpBefore = victoryPoints;
+                    buildSettlement(board, spot);
+                    if (victoryPoints > vpBefore) {
+                        return "forced spend: built settlement at " + i;
+                    }
+                }
+            }
+            for (int i = 0; i < playerSettlements.size(); i++) {
+                Intersection spot = playerSettlements.get(i).getBuildlocation();
+                int vpBefore = victoryPoints;
+                buildCity(board, spot);
+                if (victoryPoints > vpBefore) {
+                    return "forced spend: upgraded to city at " + spot.getIntersectionLocation();
+                }
+            }
+            for (int i = 0; i <= 53; i++) {
+                for (int j = i + 1; j <= 53; j++) {
+                    if (board.isValidEdge(i, j)) {
+                        int roadsBefore = playerRoads.size();
+                        Edge edge = new Edge(i, j);
+                        buildRoad(board, edge);
+                        if (playerRoads.size() > roadsBefore) {
+                            return "forced spend: built road at " + i + "-" + j;
+                        }
+                    }
+                }
+            }
+            return "forced spend: could not build anything";
+        }
+
+        int action = random.nextInt(3); // 0 = settlement, 1 = city, 2 = road.
 
         if (action == 0) {
             List<Integer> validSpots = new ArrayList<>();
@@ -124,14 +174,20 @@ public class Player {
             }
 
         } else {
+            List<int[]> validEdges = new ArrayList<>();
             for (int i = 0; i <= 53; i++) {
                 for (int j = i + 1; j <= 53; j++) {
                     if (board.isValidEdge(i, j)) {
-                        Edge edge = new Edge(i, j);
-                        buildRoad(board, edge);
-                        return "attempted road at edge " + i + "-" + j;
+                        validEdges.add(new int[] { i, j });
                     }
                 }
+            }
+            if (!validEdges.isEmpty()) {
+                int randomIndex = random.nextInt(validEdges.size());
+                int[] picked = validEdges.get(randomIndex);
+                Edge edge = new Edge(picked[0], picked[1]);
+                buildRoad(board, edge);
+                return "attempted road at edge " + picked[0] + "-" + picked[1];
             }
         }
 

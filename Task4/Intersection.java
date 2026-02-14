@@ -3,7 +3,6 @@ public class Intersection {
     private Building intersectionBuilding;
     private Player owner;
 
-    // Intersection setBuilding, set Owner
     Intersection(int node) {
         intersectionID = node;
         this.intersectionBuilding = null;
