@@ -43,11 +43,10 @@ public class Board {
         // desert goes in the middle (hex 9)
         tiles.put(9, new DesertHex(9));
 
-        // place the 18 resource hexes
         int resourceIndex = 0;
         for (int i = 0; i < 19; i++) {
             if (i == 9) {
-                continue; // skip desert
+                continue;
             }
             tiles.put(i, new ResourceHex(i, new HexBoardNum(numbers[resourceIndex]), resources[resourceIndex]));
             resourceIndex++;

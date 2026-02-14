@@ -33,6 +33,12 @@ public class Simulator {
                     break;
                 }
             }
+
+            // print victory points at the end of each round
+            for (Player player : players) {
+                System.out.println("Player " + player.getPlayerID() + " VP: " + player.getVictoryPoints());
+            }
+
             round++;
         }
 

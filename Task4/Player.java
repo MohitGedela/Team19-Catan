@@ -11,8 +11,9 @@ public class Player {
     private List<Settlement> playerSettlements;
     private List<Road> playerRoads;
     private Map<ResourceType, Integer> playerResources;
-    
-    public Player(int playerNum, int playerVP, List<City> cities, List<Settlement> settlements, List<Road> roads, Map<ResourceType, Integer> resources) {
+
+    public Player(int playerNum, int playerVP, List<City> cities, List<Settlement> settlements, List<Road> roads,
+            Map<ResourceType, Integer> resources) {
         playerID = playerNum;
         victoryPoints = playerVP;
         playerCities = cities;
@@ -40,8 +41,7 @@ public class Player {
     public boolean checkResource(ResourceType resource, int quantity) {
         if (playerResources.containsKey(resource) && playerResources.get(resource) >= quantity) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -52,7 +52,7 @@ public class Player {
 
     public void buildSettlement(Board board, Intersection buildIntersection) {
         if (!checkResource(ResourceType.Wood, 1) || !checkResource(ResourceType.Brick, 1) ||
-            !checkResource(ResourceType.Sheep, 1) || !checkResource(ResourceType.Wheat, 1)) {
+                !checkResource(ResourceType.Sheep, 1) || !checkResource(ResourceType.Wheat, 1)) {
             return;
         }
         if (board.placeSettlement(buildIntersection, this)) {
@@ -60,6 +60,7 @@ public class Player {
             removeResource(ResourceType.Brick, 1);
             removeResource(ResourceType.Sheep, 1);
             removeResource(ResourceType.Wheat, 1);
+            playerSettlements.add(new Settlement(buildIntersection, this));
             victoryPoints += 1;
         }
     }
@@ -71,6 +72,16 @@ public class Player {
         if (board.placeCity(buildIntersection, this)) {
             removeResource(ResourceType.Wheat, 2);
             removeResource(ResourceType.Ore, 3);
+
+            // remove the old settlement from the list
+            for (int i = 0; i < playerSettlements.size(); i++) {
+                if (playerSettlements.get(i).getBuildlocation() == buildIntersection) {
+                    playerSettlements.remove(i);
+                    break;
+                }
+            }
+
+            playerCities.add(new City(buildIntersection, this));
             victoryPoints += 1;
         }
     }
